@@ -26,6 +26,7 @@ public class Arena extends JPanel {
 		setPreferredSize(new Dimension(1920, 1080));
 		addMouseMotionListener(input = new MouseInput());
 		
+		// Start with 5 enemies
 		for (int i = 0; i < 5; i++) {
 			enemies.add(new Enemy(Math.random() * 1920, Math.random() * 1080));
 		}
@@ -39,18 +40,22 @@ public class Arena extends JPanel {
 		super.paintComponent(g);
 		
 		Graphics2D g2 = (Graphics2D) g;
-
+		
+		// Background black
 		g2.setColor(Color.BLACK);
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 		
+		// Draw the player box
 		g2.setColor(Color.GREEN);
 		g2.fillRect(mx, my, 30, 30);
 		
+		// Draw all the enemies (red)
 		g2.setColor(Color.RED);
 		for (Enemy e: enemies) {
 			e.draw(g2);
 		}
 		
+		// Score
 		g2.setColor(Color.WHITE);
 		g2.drawString("Score: " + (System.currentTimeMillis() - startTime) / 1000, 0, 10);
 	}
@@ -60,9 +65,12 @@ public class Arena extends JPanel {
 		
 		boolean collided = false;
 		
+		// Update the mouse coordinates
 		mx = input.getX();
 		my = input.getY();
 		
+		// Go through all the enemies and update their location
+		// If they've collided then return up
 		for (Enemy e : enemies) {
 			collided = e.update(mx, my);
 			if (collided) {
@@ -70,6 +78,7 @@ public class Arena extends JPanel {
 			}
 		}
 		
+		// If the 200 Ticks have passed (1 second) then spawn a new enemy
 		newEnemy--;
 		if (newEnemy <= 0) {
 			enemies.add(new Enemy(Math.random() * 1920, Math.random() * 1080));

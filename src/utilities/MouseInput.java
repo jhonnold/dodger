@@ -12,7 +12,8 @@ public class MouseInput implements MouseMotionListener {
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {}
-
+	
+	// Simply update its coordinates in the tracking variables
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		x = e.getX();
